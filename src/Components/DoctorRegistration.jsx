@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { useUserContext } from '../Context/DoctorContext';
 import DoctorPage from './DoctorPage';
+import { useNavigate } from 'react-router-dom';
 
 const DoctorRegistration = () => {
     const { updateUser } = useUserContext();
     const [name, setName] = useState('');
     const [specialty, setSpecialty] = useState('');
+
+    const navigate = useNavigate();
 
     const handelNameChange = (e) => {
         setName(e.target.value)
@@ -18,7 +21,7 @@ const DoctorRegistration = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         updateUser({ name, specialty })
-
+        navigate("/doctor-page")
 
 
     }
@@ -43,6 +46,7 @@ const DoctorRegistration = () => {
                         </select>
                     </label>
                     <button> Register </button>
+
                 </form>
 
             </div>
