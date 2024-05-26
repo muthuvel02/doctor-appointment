@@ -1,24 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import DoctorPage from './Components/DoctorPage';
+import DoctorRegistration from './Components/DoctorRegistration';
+import PatientRegistration from './Components/PatientRegistration';
+import { UserProvider } from './Context/DoctorContext';
+import { PatientProvider } from './Context/PatientContext';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserProvider>
+      <PatientProvider>
+        <div className='App'>
+          {/* <Router>
+            <Switch>
+              <Route exact path='/' component={DoctorRegistration} />
+              <Route path='/doctor-page' component={DoctorPage} />
+            </Switch>
+          </Router> */}
+          <DoctorRegistration />
+          {/* <PatientRegistration /> */}
+        </div>
+      </PatientProvider>
+    </UserProvider>
   );
 }
 
