@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { usePatientContext } from '../Context/PatientContext';
+import { useNavigate } from 'react-router-dom';
 
 const PatientRegistration = () => {
     const {updatePatient} = usePatientContext();
     const [name, setName] = useState('');
     const [age, setAge] = useState('');
+    const navigate = useNavigate();
 
     const handelNameChange = (e) => {
         setName(e.target.value)
@@ -17,6 +19,7 @@ const PatientRegistration = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         updatePatient({ name, age })
+        navigate("/consulting-page")
 
 
 
@@ -35,7 +38,7 @@ const PatientRegistration = () => {
                         Age:
                         <input type="text" value={age} onChange={handelAgeChange} />
                     </label>
-                    <button> Register </button>
+                    <button > Register </button>
                 </form>
             </div>
         </>

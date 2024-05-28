@@ -12,14 +12,24 @@ export const UserProvider = ({ children }) => {
     specialty: "",
   });
 
+  const [availableSlot,setAvailableSlot] = useState([])
+
   const updateUser = (userData) => {
     setUser(userData);
   };
-  console.log(user);
+
+  
+const doctorSlot = (slot) => {
+  setAvailableSlot(slot);
+}
+  console.log("availableSlot", availableSlot);
+
 
   const contextValue = {
     user,
     updateUser,
+    availableSlot,
+    doctorSlot,
   };
 
   return (
