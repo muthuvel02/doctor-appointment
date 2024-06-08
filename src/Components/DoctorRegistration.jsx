@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { useUserContext } from '../Context/DoctorContext';
+import { useDoctorContext, useUserContext } from '../Context/DoctorContext';
 import DoctorPage from './DoctorPage';
 import { useNavigate } from 'react-router-dom';
 
 const DoctorRegistration = () => {
-    const { updateUser } = useUserContext();
+    const {addDoctor} = useDoctorContext();
     const [name, setName] = useState('');
     const [specialty, setSpecialty] = useState('');
 
@@ -20,7 +20,7 @@ const DoctorRegistration = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        updateUser({ name, specialty })
+        addDoctor({ name, specialty, availableSlots:[] })
         navigate("/doctor-page")
 
 
