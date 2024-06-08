@@ -1,38 +1,52 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 const DoctorContext = createContext();
 
-export const useUserContext = () => {
+export const useDoctorContext = () => {
   return useContext(DoctorContext);
 };
 
-export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    name: "",
-    specialty: "",
-  });
+export const DoctorProvider = ({ children }) => {
+  const [doctors, setDoctors] = useState([]);
 
-  const [availableSlot,setAvailableSlot] = useState([])
+  // Load data from localStorage when the component mounts
+  useEffect(() => {
+    const storedDoctors = localStorage.getItem("doctors");
+    if (storedDoctors) {
+      setDoctors(JSON.parse(storedDoctors));
+      console.log("storedDoctors", storedDoctors);
+    }
+  }, []); // This should run only once when the component mounts, so the dependency array is empty.
 
-  const updateUser = (userData) => {
-    setUser(userData);
+  // Save data to localStorage whenever the doctors state changes
+  useEffect(() => {
+    localStorage.setItem("doctors", JSON.stringify(doctors));
+  }, [doctors]);
+
+  // Add doctor
+  const addDoctor = (doctorData) => {
+    setDoctors((prevDoctors) => [...prevDoctors, doctorData]);
   };
 
-  
-const doctorSlot = (slot) => {
-  setAvailableSlot(slot);
-}
-  console.log("availableSlot", availableSlot);
-
+  // Update doctor slots
+  const updateDoctorSlots = (name, slots) => {
+    setDoctors((prevDoctors) =>
+      prevDoctors.map((doctor) =>
+        doctor.name === name ? { ...doctor, availableSlots: slots } : doctor
+      )
+    );
+  };
+  console.log("updateDoctorSlot", doctors);
 
   const contextValue = {
-    user,
-    updateUser,
-    availableSlot,
-    doctorSlot,
+    doctors,
+    addDoctor,
+    updateDoctorSlots,
   };
 
   return (
-    <DoctorContext.Provider value={contextValue}>{children}</DoctorContext.Provider>
+    <DoctorContext.Provider value={contextValue}>
+      {children}
+    </DoctorContext.Provider>
   );
 };
